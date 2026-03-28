@@ -1,4 +1,4 @@
-# 📱 Mini Social Media App
+# 📱 Medora
 
 > A full-stack MERN social media web application with user authentication, post creation, likes, comments, follow system, and user profiles.
 
@@ -36,7 +36,7 @@
 ## 📂 Project Structure
 
 ```
-mini-social-media/
+Medora/
 ├── Backend/
 │   ├── config/
 │   │   └── db.js
@@ -85,9 +85,8 @@ mini-social-media/
 cd Backend
 npm install
 
-# Create .env file
+# Create .env file with your credentials
 cp .env.example .env
-# Add your MongoDB URI and JWT secret
 
 npm start
 ```
@@ -126,4 +125,3 @@ Open your browser at `http://localhost:5173`
 ## 📜 License
 
 This project is open-source and intended for educational purposes.
-# Medora
