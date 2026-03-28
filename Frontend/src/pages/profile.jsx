@@ -9,7 +9,11 @@ export default function ProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editForm, setEditForm] = useState({ name: "", bio: "", profilePic: "" });
+  const [editForm, setEditForm] = useState({
+    name: "",
+    bio: "",
+    profilePic: "",
+  });
 
   const { userId: profileUserId } = useParams(); // User ID from URL
   const token = localStorage.getItem("token");
@@ -73,7 +77,7 @@ export default function ProfilePage() {
         followers: res.data.followers || [],
         following: res.data.following || [],
       });
-      
+
       // Set edit form with current values
       setEditForm({
         name: res.data.name,
@@ -149,11 +153,9 @@ export default function ProfilePage() {
 
   const handleSaveProfile = async () => {
     try {
-      const res = await axios.put(
-        `${API_BASE}/updateprofile`,
-        editForm,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await axios.put(`${API_BASE}/updateprofile`, editForm, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setUser(res.data.user);
       setIsEditing(false);
       alert("Profile updated successfully!");
@@ -179,7 +181,11 @@ export default function ProfilePage() {
         <div className="profile-header-section">
           <div className="profile-avatar-large">
             {user.profilePic ? (
-              <img src={user.profilePic} alt={user.name} className="profile-pic-img" />
+              <img
+                src={user.profilePic}
+                alt={user.name}
+                className="profile-pic-img"
+              />
             ) : (
               user.name?.charAt(0).toUpperCase() || "U"
             )}
@@ -190,7 +196,12 @@ export default function ProfilePage() {
               <h2 className="profile-username">{user.name}</h2>
               {isOwnProfile ? (
                 <>
-                  <button className="edit-profile-btn" onClick={handleEditProfile}>Edit Profile</button>
+                  <button
+                    className="edit-profile-btn"
+                    onClick={handleEditProfile}
+                  >
+                    Edit Profile
+                  </button>
                   <button className="settings-btn">⚙️</button>
                 </>
               ) : (
@@ -289,16 +300,20 @@ export default function ProfilePage() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2>Edit Profile</h2>
-              <button className="modal-close" onClick={handleCancelEdit}>×</button>
+              <button className="modal-close" onClick={handleCancelEdit}>
+                ×
+              </button>
             </div>
-            
+
             <div className="modal-body">
               <div className="form-group">
                 <label>Name</label>
                 <input
                   type="text"
                   value={editForm.name}
-                  onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, name: e.target.value })
+                  }
                   placeholder="Your name"
                 />
               </div>
@@ -307,7 +322,9 @@ export default function ProfilePage() {
                 <label>Bio</label>
                 <textarea
                   value={editForm.bio}
-                  onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, bio: e.target.value })
+                  }
                   placeholder="Tell us about yourself"
                   rows="4"
                 />
@@ -318,7 +335,9 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   value={editForm.profilePic}
-                  onChange={(e) => setEditForm({ ...editForm, profilePic: e.target.value })}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, profilePic: e.target.value })
+                  }
                   placeholder="https://example.com/profile.jpg"
                 />
                 {editForm.profilePic && (
@@ -330,8 +349,12 @@ export default function ProfilePage() {
             </div>
 
             <div className="modal-footer">
-              <button className="btn-cancel" onClick={handleCancelEdit}>Cancel</button>
-              <button className="btn-save" onClick={handleSaveProfile}>Save Changes</button>
+              <button className="btn-cancel" onClick={handleCancelEdit}>
+                Cancel
+              </button>
+              <button className="btn-save" onClick={handleSaveProfile}>
+                Save Changes
+              </button>
             </div>
           </div>
         </div>

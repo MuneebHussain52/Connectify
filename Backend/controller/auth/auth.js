@@ -139,12 +139,10 @@ exports.followUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Follow error:", error);
-    res
-      .status(500)
-      .json({
-        message: "Error following/unfollowing user",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error following/unfollowing user",
+      error: error.message,
+    });
   }
 };
 
@@ -166,9 +164,13 @@ exports.updateProfile = async (req, res) => {
     await user.save();
 
     const updatedUser = await User.findById(userId).select("-password");
-    res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", user: updatedUser });
   } catch (error) {
     console.error("Update profile error:", error);
-    res.status(500).json({ message: "Error updating profile", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating profile", error: error.message });
   }
 };

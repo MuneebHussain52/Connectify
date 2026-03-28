@@ -198,7 +198,11 @@ export default function FeedPage() {
           <div className="user-profile-card">
             <div className="profile-avatar">
               {currentUser?.profilePic ? (
-                <img src={currentUser.profilePic} alt={currentUser.name} className="avatar-img" />
+                <img
+                  src={currentUser.profilePic}
+                  alt={currentUser.name}
+                  className="avatar-img"
+                />
               ) : (
                 currentUser?.name?.charAt(0).toUpperCase() || "U"
               )}
@@ -253,7 +257,11 @@ export default function FeedPage() {
                     <div className="post-author">
                       <div className="author-avatar">
                         {post.user?.profilePic ? (
-                          <img src={post.user.profilePic} alt={post.user.name} className="avatar-img" />
+                          <img
+                            src={post.user.profilePic}
+                            alt={post.user.name}
+                            className="avatar-img"
+                          />
                         ) : (
                           post.user?.name?.charAt(0).toUpperCase() || "A"
                         )}
@@ -351,7 +359,11 @@ export default function FeedPage() {
                           <div key={idx} className="comment-row">
                             <div className="comment-avatar-small">
                               {c.user?.profilePic ? (
-                                <img src={c.user.profilePic} alt={c.user.name} className="avatar-img" />
+                                <img
+                                  src={c.user.profilePic}
+                                  alt={c.user.name}
+                                  className="avatar-img"
+                                />
                               ) : (
                                 c.user?.name?.charAt(0).toUpperCase() || "A"
                               )}
