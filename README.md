@@ -126,3 +126,4 @@ Open your browser at `http://localhost:5173`
 ## 📜 License
 
 This project is open-source and intended for educational purposes.
+# Medora
