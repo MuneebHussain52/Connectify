@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../components/signup.css";
 import axios from "axios";
+import API_BASE from "../api";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -17,7 +18,7 @@ export default function Signup() {
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/api/signup", {
+      const res = await axios.post(`${API_BASE}/signup`, {
         name,
         email,
         password,

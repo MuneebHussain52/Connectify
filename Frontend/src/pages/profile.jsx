@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "../components/profile.css";
+import API_BASE from "../api";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -18,7 +19,6 @@ export default function ProfilePage() {
   const { userId: profileUserId } = useParams(); // User ID from URL
   const token = localStorage.getItem("token");
   const loggedInUserId = localStorage.getItem("userId");
-  const API_BASE = "http://localhost:3000/api";
   const navigate = useNavigate();
 
   // Determine which user profile to show

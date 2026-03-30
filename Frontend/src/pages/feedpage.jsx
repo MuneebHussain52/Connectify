@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../components/feedpage.css";
+import API_BASE from "../api";
 
 export default function FeedPage() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +16,6 @@ export default function FeedPage() {
   const [followingUsers, setFollowingUsers] = useState([]);
 
   const token = localStorage.getItem("token");
-  const API_BASE = "http://localhost:3000/api";
   const navigate = useNavigate();
 
   useEffect(() => {

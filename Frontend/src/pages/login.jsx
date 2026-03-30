@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import FeedPage from "./feedpage";
+import { useNavigate } from "react-router-dom";
 import "../components/login.css";
-
 import axios from "axios";
+import API_BASE from "../api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +13,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:3000/api/login", {
+      const res = await axios.post(`${API_BASE}/login`, {
         email,
         password,
       });
