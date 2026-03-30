@@ -11,6 +11,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://medora-guh0bubo5-muneeb525353-2091s-projects.vercel.app",
+      "https://medora-git-main-muneeb525353-2091s-projects.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
