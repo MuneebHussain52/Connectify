@@ -14,6 +14,7 @@ export default function FeedPage() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [followingUsers, setFollowingUsers] = useState([]);
+  const [isPosting, setIsPosting] = useState(false);
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -70,6 +71,8 @@ export default function FeedPage() {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
+    if (isPosting) return; // prevent double-submit
+    setIsPosting(true);
     try {
       await axios.post(
         `${API_BASE}/createpost`,
@@ -81,6 +84,8 @@ export default function FeedPage() {
       fetchPosts();
     } catch (err) {
       console.error("Error creating post", err);
+    } finally {
+      setIsPosting(false);
     }
   };
 
@@ -177,6 +182,39 @@ export default function FeedPage() {
     }
   };
 
+  const handleDeletePost = async (postId) => {
+    if (!window.confirm("Delete this post? This cannot be undone.")) return;
+    try {
+      await axios.delete(`${API_BASE}/deletepost/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPosts((prev) => prev.filter((p) => p._id !== postId));
+    } catch (err) {
+      console.error("Error deleting post", err);
+      alert(`Error: ${err.response?.data?.message || err.message}`);
+    }
+  };
+
+  const handleDeleteComment = async (postId, commentId) => {
+    if (!window.confirm("Delete this comment?")) return;
+    try {
+      await axios.delete(`${API_BASE}/deletecomment/${postId}/${commentId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // Remove the comment locally for instant UI update
+      setPosts((prev) =>
+        prev.map((post) =>
+          post._id === postId
+            ? { ...post, comments: post.comments.filter((c) => c._id !== commentId) }
+            : post
+        )
+      );
+    } catch (err) {
+      console.error("Error deleting comment", err);
+      alert(`Error: ${err.response?.data?.message || err.message}`);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
@@ -245,7 +283,9 @@ export default function FeedPage() {
                 onChange={(e) => setImage(e.target.value)}
                 placeholder="🖼️ Image URL (optional)"
               />
-              <button type="submit">📤 Post</button>
+              <button type="submit" disabled={isPosting}>
+                {isPosting ? "⏳ Posting…" : "📤 Post"}
+              </button>
             </form>
           </div>
 
@@ -278,7 +318,7 @@ export default function FeedPage() {
                         </p>
                       </div>
                     </div>
-                    {post.user?._id !== currentUserId && (
+                    {post.user?._id !== currentUserId ? (
                       <button
                         className={
                           followingUsers.includes(post.user?._id)
@@ -290,6 +330,14 @@ export default function FeedPage() {
                         {followingUsers.includes(post.user?._id)
                           ? "Following"
                           : "Follow"}
+                      </button>
+                    ) : (
+                      <button
+                        className="feed-delete-post-btn"
+                        onClick={() => handleDeletePost(post._id)}
+                        title="Delete post"
+                      >
+                        🗑️ Delete
                       </button>
                     )}
                   </div>
@@ -356,7 +404,7 @@ export default function FeedPage() {
                     post.comments.length > 0 && (
                       <div className="comments-list-section">
                         {post.comments.map((c, idx) => (
-                          <div key={idx} className="comment-row">
+                          <div key={c._id || idx} className="comment-row">
                             <div className="comment-avatar-small">
                               {c.user?.profilePic ? (
                                 <img
@@ -381,6 +429,15 @@ export default function FeedPage() {
                                 {c.text}
                               </span>
                             </div>
+                            {c.user?._id === currentUserId && (
+                              <button
+                                className="delete-comment-btn"
+                                onClick={() => handleDeleteComment(post._id, c._id)}
+                                title="Delete comment"
+                              >
+                                ×
+                              </button>
+                            )}
                           </div>
                         ))}
                       </div>

@@ -151,6 +151,19 @@ export default function ProfilePage() {
     });
   };
 
+  const handleDeletePost = async (postId) => {
+    if (!window.confirm("Delete this post? This cannot be undone.")) return;
+    try {
+      await axios.delete(`${API_BASE}/deletepost/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPosts((prev) => prev.filter((p) => p._id !== postId));
+    } catch (err) {
+      console.error("Error deleting post", err);
+      alert(`Error: ${err.response?.data?.message || err.message}`);
+    }
+  };
+
   const handleSaveProfile = async () => {
     try {
       const res = await axios.put(`${API_BASE}/updateprofile`, editForm, {
@@ -287,6 +300,18 @@ export default function ProfilePage() {
                   <span className="overlay-stat">
                     💬 {post.comments?.length || 0}
                   </span>
+                  {isOwnProfile && (
+                    <button
+                      className="profile-delete-post-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeletePost(post._id);
+                      }}
+                      title="Delete post"
+                    >
+                      🗑️
+                    </button>
+                  )}
                 </div>
               </div>
             ))

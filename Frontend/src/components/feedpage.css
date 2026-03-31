@@ -323,6 +323,43 @@ body {
   border-color: #b3b3b3;
 }
 
+.feed-delete-post-btn {
+  background: transparent;
+  color: #e41e3f;
+  border: 1px solid #e41e3f;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.feed-delete-post-btn:hover {
+  background: #e41e3f;
+  color: white;
+}
+
+.delete-comment-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+  margin-left: auto;
+}
+
+.delete-comment-btn:hover {
+  color: #e41e3f;
+}
+
 .post-time {
   font-size: 0.8rem;
   color: #65676b;

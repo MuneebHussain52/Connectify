@@ -9,6 +9,7 @@ const getpostlikecount = require("../controller/posts").getpostlikecount;
 const getpostcomment = require("../controller/posts").getpostcomment;
 const getpostcommentcount = require("../controller/posts").getpostcommentcount;
 const deletepost = require("../controller/posts").deletepost;
+const deletecomment = require("../controller/posts").deletecomment;
 const getprofile = require("../controller/posts").getprofile;
 const authmiddleware = require("../middleware/auth");
 
@@ -25,6 +26,7 @@ router.get("/getpostlikecount/:postId", getpostlikecount);
 router.get("/getpostcomment/:postId", getpostcomment);
 router.get("/getpostcommentcount/:postId", getpostcommentcount);
 router.delete("/deletepost/:postId", authmiddleware, deletepost);
+router.delete("/deletecomment/:postId/:commentId", authmiddleware, deletecomment);
 router.get("/getprofile/:userId", authmiddleware, getprofile);
 
 module.exports = router;
