@@ -232,40 +232,6 @@ export default function FeedPage() {
       </nav>
 
       <div className="main-content">
-        <aside className="sidebar">
-          <div className="user-profile-card">
-            <div className="profile-avatar">
-              {currentUser?.profilePic ? (
-                <img
-                  src={currentUser.profilePic}
-                  alt={currentUser.name}
-                  className="avatar-img"
-                />
-              ) : (
-                currentUser?.name?.charAt(0).toUpperCase() || "U"
-              )}
-            </div>
-            <h3>Welcome back!</h3>
-            <p className="user-stats">
-              <span>
-                📝 {posts.filter((p) => p.user?._id === currentUserId).length}{" "}
-                Posts
-              </span>
-            </p>
-          </div>
-          <div className="sidebar-menu">
-            <a href="/feedpage" className="menu-item active">
-              <span className="menu-icon">🏠</span> Feed
-            </a>
-            <a href="/profile" className="menu-item">
-              <span className="menu-icon">👤</span> Profile
-            </a>
-            <a href="#" className="menu-item">
-              <span className="menu-icon">⚙️</span> Settings
-            </a>
-          </div>
-        </aside>
-
         <main className="feed-main">
           <div className="create-post-card">
             <h3 className="card-title">Create a Post</h3>
