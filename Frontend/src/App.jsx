@@ -12,9 +12,17 @@ function App() {
 
   useEffect(() => {
     // Check if user has a valid token on app load
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    setIsAuthenticated(!!(token && userId));
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      setIsAuthenticated(!!(token && userId));
+    };
+
+    checkAuth();
+
+    // Listen for storage changes (when token is added/removed)
+    window.addEventListener("storage", checkAuth);
+    return () => window.removeEventListener("storage", checkAuth);
   }, []);
 
   if (isAuthenticated === null) {

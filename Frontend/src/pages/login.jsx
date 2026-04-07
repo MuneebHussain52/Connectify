@@ -22,6 +22,9 @@ export default function Login() {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userId", res.data.id);
 
+        // Trigger storage event so App.jsx updates auth state
+        window.dispatchEvent(new Event("storage"));
+
         Navigate("/feedpage", { replace: true });
       } else {
         alert("No token received from server");
